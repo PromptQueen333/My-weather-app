@@ -1,0 +1,111 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding-top: 20px;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: flex-start; /* align top vertically */
+  padding-top: 40px; /* spacing from top */
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  transition: background 0.5s ease-in-out;
+  color: white;
+  background-color: #282c34; /* from your earlier body block */
+}
+
+
+/* Weather-specific backgrounds */
+body.weather-clear {
+  background-image: url('C:\Users\estok\weather-app\public\images\blue-sky.jpg');
+}
+
+body.weather-clouds {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e3/Clouds_over_the_Sun_Lake_in_Jasper_National_Park_-_Canada.jpg');
+}
+
+body.weather-rain {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/fd/Rain_in_Forest_01.JPG');
+}
+
+body.weather-snow {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/11/Snow_covered_landscape_in_Germany.jpg');
+}
+
+body.weather-thunderstorm {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/58/Lightning_Storm_in_Toronto.jpg');
+}
+
+body.weather-drizzle {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Drizzle_in_forest.jpg');
+}
+
+body.weather-mist,
+body.weather-haze,
+body.weather-fog {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/26/Mist_in_Forest.jpg');
+}
+
+/* Container styling */
+.container {
+  text-align: center;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.105);
+  border-radius: 15px;
+  max-width: 500px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+}
+
+.container p, .container h2 {
+  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.9); /* optional for extra contrast */
+}
+
+h2, p {
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
