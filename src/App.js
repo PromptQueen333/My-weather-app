@@ -1,78 +1,70 @@
+// src/App.js
 import React, { useEffect, useState } from "react";
 import Weather from "./components/Weather";
 import './App.css';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [lat, setLat] = useState(null);
-  const [long, setLong] = useState(null);
   const apiKey = "8539849456ab022cbbcd1ae846098241";
 
-  // Fetch geolocation once when component mounts
+  // Get user location on mount
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        setLat(latitude);
-        setLong(longitude);
-
+        const { latitude, longitude } = position.coords;
         fetchWeather(latitude, longitude);
       },
       (error) => {
         console.error("Geolocation error:", error);
-        fetchWeatherByCity("New York"); // fallback city
+        fetchWeatherByCity("New York"); // fallback
       }
     );
   }, []);
 
-  // Update body class when weather data changes
-  useEffect(() => {
-    if (weatherData) {
-      const weatherMain = weatherData.weather[0].main.toLowerCase();
-      document.body.className = ''; // reset
-      document.body.classList.add(`weather-${weatherMain}`);
-    }
-  }, [weatherData]);
-
   // Fetch weather by coordinates
-  const fetchWeather = async (latitude, longitude) => {
+  const fetchWeather = async (lat, lon) => {
     try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
       );
-      const result = await response.json();
-      setWeatherData(result);
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
+      const data = await res.json();
+      console.log("Weather data fetched:", data); // confirms it works
+      setWeatherData(data);
+    } catch (err) {
+      console.error("Error fetching weather:", err);
     }
   };
 
-  // Fetch weather by city name (fallback)
-  const fetchWeatherByCity = async (cityName) => {
+  // Fallback fetch
+  const fetchWeatherByCity = async (city) => {
     try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${apiKey}`
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
       );
-      const result = await response.json();
-      setWeatherData(result);
-    } catch (error) {
-      console.error("Error fetching fallback city weather:", error);
+      const data = await res.json();
+      console.log("Fallback data fetched:", data);
+      setWeatherData(data);
+    } catch (err) {
+      console.error("Error fetching city weather:", err);
     }
   };
-const backgroundStyle = {
+
+  const backgroundStyle = {
     backgroundImage: "url('/images/blue-sky.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '100vh',
-    color: 'white',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    padding: "2rem",
+    borderRadius: '12px',
+    color: "white",
   };
+
   return (
     <div className="app-wrapper" style={backgroundStyle}>
-      <div className={`container weather-${weatherData?.weather?.[0]?.main.toLowerCase() || ''}`}>
-        {weatherData ? <Weather weatherData={weatherData} /> : <p>Loading weather...</p>}
-      </div>
+      {weatherData ? (
+        <Weather weatherData={weatherData} />
+      ) : (
+        <p>Loading weather...</p>
+      )}
     </div>
   );
 }
